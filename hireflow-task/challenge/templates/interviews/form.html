@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Interview Notes · HireFlow{% endblock %}
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body p-4">
+    <h1 class="h3">Interview for {{ application.applicant.username }}</h1>
+    <p class="text-secondary">{{ application.job.title }}</p>
+    <form method="post">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Scheduled time</label>
+          <input class="form-control" type="datetime-local" name="scheduled_at">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Score</label>
+          <input class="form-control" type="number" name="score" min="1" max="10" required>
+        </div>
+        <div class="col-12">
+          <label class="form-label">Notes</label>
+          <textarea class="form-control" name="notes" rows="8" required></textarea>
+        </div>
+      </div>
+      <button class="btn btn-primary mt-4" type="submit">Save interview</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

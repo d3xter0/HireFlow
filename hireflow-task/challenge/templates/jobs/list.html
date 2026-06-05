@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Jobs · HireFlow{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="h3 mb-1">Open jobs</h1>
+    <p class="text-secondary mb-0">Active roles accepting applications.</p>
+  </div>
+  {% if current_user.is_recruiting_staff %}
+    <a class="btn btn-primary" href="{{ url_for('jobs.create_job') }}">Post job</a>
+  {% endif %}
+</div>
+<div class="row g-3">
+  {% for job in jobs %}
+    <div class="col-lg-6">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <h2 class="h5">{{ job.title }}</h2>
+            <span class="badge text-bg-light">{{ job.employment_type }}</span>
+          </div>
+          <p class="text-secondary mb-2">{{ job.department }} · {{ job.location }}</p>
+          <p>{{ job.description[:180] }}{% if job.description|length > 180 %}...{% endif %}</p>
+          <a class="btn btn-outline-primary" href="{{ url_for('jobs.detail', job_id=job.id) }}">View role</a>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <p class="text-secondary">No active jobs are currently posted.</p>
+  {% endfor %}
+</div>
+{% endblock %}

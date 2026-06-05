@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}{{ job.title }} · HireFlow{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h3">{{ job.title }}</h1>
+        <p class="text-secondary">{{ job.department }} · {{ job.location }} · {{ job.employment_type }}</p>
+        <h2 class="h5 mt-4">Role overview</h2>
+        <p class="preline">{{ job.description }}</p>
+        <h2 class="h5 mt-4">Requirements</h2>
+        <p class="preline">{{ job.requirements }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5">Application</h2>
+        {% if current_user.role == 'applicant' %}
+          {% if existing_application %}
+            <p class="text-secondary">You have already applied.</p>
+            <a class="btn btn-primary w-100" href="{{ url_for('applications.detail', application_id=existing_application.id) }}">View application</a>
+          {% else %}
+            <a class="btn btn-primary w-100" href="{{ url_for('jobs.apply', job_id=job.id) }}">Apply now</a>
+          {% endif %}
+        {% else %}
+          <p class="text-secondary mb-0">{{ job.applications|length }} applications received.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

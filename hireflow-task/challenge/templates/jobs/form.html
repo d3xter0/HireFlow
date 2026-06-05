@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Post job · HireFlow{% endblock %}
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body p-4">
+    <h1 class="h3 mb-3">Post a job</h1>
+    <form method="post">
+      <div class="row g-3">
+        <div class="col-md-6"><label class="form-label">Title</label><input class="form-control" name="title" required></div>
+        <div class="col-md-6"><label class="form-label">Department</label><input class="form-control" name="department" required></div>
+        <div class="col-md-6"><label class="form-label">Location</label><input class="form-control" name="location" required></div>
+        <div class="col-md-6"><label class="form-label">Employment type</label><input class="form-control" name="employment_type" value="Full-time" required></div>
+        <div class="col-12"><label class="form-label">Description</label><textarea class="form-control" name="description" rows="6" required></textarea></div>
+        <div class="col-12"><label class="form-label">Requirements</label><textarea class="form-control" name="requirements" rows="6" required></textarea></div>
+      </div>
+      <button class="btn btn-primary mt-4" type="submit">Publish job</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

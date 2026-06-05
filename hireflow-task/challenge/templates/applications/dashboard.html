@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}My Applications · HireFlow{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="h3 mb-1">My applications</h1>
+    <p class="text-secondary mb-0">Track your submitted roles, resumes, and interview progress.</p>
+  </div>
+  <a class="btn btn-outline-primary" href="{{ url_for('jobs.list_jobs') }}">Browse jobs</a>
+</div>
+<div class="row g-3 mb-4">
+  <div class="col-md-4"><div class="stat-card"><span>Total</span><strong>{{ applications|length }}</strong></div></div>
+  <div class="col-md-4"><div class="stat-card"><span>Interviews</span><strong>{{ applications|selectattr('status', 'equalto', 'Interview Scheduled')|list|length }}</strong></div></div>
+  <div class="col-md-4"><div class="stat-card"><span>Accepted</span><strong>{{ applications|selectattr('status', 'equalto', 'Accepted')|list|length }}</strong></div></div>
+</div>
+<div class="card shadow-sm">
+  <div class="table-responsive">
+    <table class="table align-middle mb-0">
+      <thead><tr><th>Role</th><th>Status</th><th>Submitted</th><th>Resume</th><th></th></tr></thead>
+      <tbody>
+      {% for application in applications %}
+        <tr>
+          <td><strong>{{ application.job.title }}</strong><br><span class="text-secondary">{{ application.job.department }}</span></td>
+          <td><span class="badge status-badge">{{ application.status }}</span></td>
+          <td>{{ application.created_at.strftime('%b %d, %Y') }}</td>
+          <td>{% if application.resume %}{{ application.resume.filename }}{% else %}<span class="text-secondary">Not uploaded</span>{% endif %}</td>
+          <td class="text-end"><a class="btn btn-sm btn-outline-primary" href="{{ url_for('applications.detail', application_id=application.id) }}">Open</a></td>
+        </tr>
+      {% else %}
+        <tr><td colspan="5" class="text-secondary p-4">No applications yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

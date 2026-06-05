@@ -1,0 +1,14 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      SECRET_KEY: "replace-this-secret"
+      DATABASE_URL: "sqlite:////app/hireflow.db"
+    volumes:
+      - .:/app
+      - hireflow_uploads:/app/uploads
+
+volumes:
+  hireflow_uploads:

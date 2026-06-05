@@ -1,0 +1,64 @@
+body {
+  background: #f4f7fb;
+  color: #1f2937;
+}
+
+.page-shell {
+  min-height: calc(100vh - 56px);
+}
+
+.hero-panel {
+  background: linear-gradient(135deg, #ffffff 0%, #eaf2ff 100%);
+  border: 1px solid #dbe7f6;
+  border-radius: 8px;
+  box-shadow: 0 16px 48px rgba(31, 41, 55, 0.08);
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.metric-grid div,
+.stat-card {
+  background: #ffffff;
+  border: 1px solid #dbe2ea;
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.metric-grid strong,
+.stat-card strong {
+  display: block;
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.metric-grid span,
+.stat-card span {
+  color: #64748b;
+  font-size: 0.92rem;
+}
+
+.card {
+  border-radius: 8px;
+  border-color: #dbe2ea;
+}
+
+.table thead th {
+  background: #f8fafc;
+  color: #475569;
+  font-size: 0.83rem;
+  text-transform: uppercase;
+}
+
+.status-badge {
+  background: #e7f0ff;
+  color: #174ea6;
+  border: 1px solid #c8dcff;
+}
+
+.preline {
+  white-space: pre-line;
+}

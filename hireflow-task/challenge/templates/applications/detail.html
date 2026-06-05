@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Application #{{ application.id }} · HireFlow{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card shadow-sm mb-4">
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h1 class="h3">{{ application.job.title }}</h1>
+            <p class="text-secondary">{{ application.job.department }} · {{ application.job.location }}</p>
+          </div>
+          <span class="badge status-badge fs-6">{{ application.status }}</span>
+        </div>
+        <h2 class="h5 mt-4">Applicant</h2>
+        <p>{{ application.applicant.username }} · {{ application.applicant.email }}</p>
+        <h2 class="h5 mt-4">Cover letter</h2>
+        <p class="preline">{{ application.cover_letter or "No cover letter provided." }}</p>
+      </div>
+    </div>
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2 class="h5 mb-0">Interview notes</h2>
+          {% if current_user.is_recruiting_staff %}
+            <a class="btn btn-sm btn-primary" href="{{ url_for('interviews.create', application_id=application.id) }}">Add interview</a>
+          {% endif %}
+        </div>
+        {% for interview in application.interviews %}
+          <div class="border rounded-2 p-3 mb-3">
+            <div class="d-flex justify-content-between">
+              <strong>Score {{ interview.score }}/10</strong>
+              <span class="text-secondary">{{ interview.recruiter.username }}</span>
+            </div>
+            {% if interview.scheduled_at %}<p class="text-secondary mb-2">{{ interview.scheduled_at.strftime('%b %d, %Y %H:%M') }}</p>{% endif %}
+            <p class="preline mb-0">{{ interview.notes }}</p>
+          </div>
+        {% else %}
+          <p class="text-secondary mb-0">No interview notes recorded.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h2 class="h5">Resume</h2>
+        {% if application.resume %}
+          <p class="text-secondary">{{ application.resume.filename }}</p>
+          <a class="btn btn-outline-primary w-100" href="{{ url_for('resumes.download', resume_id=application.resume.id) }}">Download resume</a>
+        {% else %}
+          <p class="text-secondary">No resume uploaded.</p>
+        {% endif %}
+        {% if current_user.role == 'applicant' and application.user_id == current_user.id %}
+          <a class="btn btn-primary w-100 mt-2" href="{{ url_for('resumes.upload', application_id=application.id) }}">Upload resume</a>
+        {% endif %}
+      </div>
+    </div>
+    {% if current_user.is_recruiting_staff %}
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h2 class="h5">Status</h2>
+          <form method="post" action="{{ url_for('applications.update_status', application_id=application.id) }}">
+            <select class="form-select mb-3" name="status">
+              {% for status in statuses %}
+                <option value="{{ status }}" {% if status == application.status %}selected{% endif %}>{{ status }}</option>
+              {% endfor %}
+            </select>
+            <button class="btn btn-primary w-100" type="submit">Update status</button>
+          </form>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

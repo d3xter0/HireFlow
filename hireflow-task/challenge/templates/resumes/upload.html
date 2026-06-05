@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Upload Resume · HireFlow{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h3">Upload resume</h1>
+        <p class="text-secondary">Application for {{ application.job.title }}</p>
+        <form method="post" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label class="form-label">Resume file</label>
+            <input class="form-control" type="file" name="resume" accept=".pdf,.doc,.docx,.txt" required>
+          </div>
+          <button class="btn btn-primary" type="submit">Upload</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
